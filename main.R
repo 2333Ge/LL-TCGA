@@ -4,10 +4,10 @@ if (!require('rjson'))
 library('rjson')
 
 # 样本文件存放目录，（注意：可以先放少部分样本跑跑验证一下，太多了需要跑很久）
-DIR = './gdc-temp/'
+DIR = './workspace/gdc-temp/'
 
 # 读取JSON文件
-json_data <- fromJSON(file = "./metadata.cart.2023-09-21.json")
+json_data <- fromJSON(file = "./workspace/metadata.cart.2023-09-21.json")
 
 #=======得到样本文件分别属于哪个分组
 
@@ -63,58 +63,58 @@ get_mean = function(file_list, key) {
   return(result_mean)
 }
 
-# # 患病组处理，得到understand均值
-# disease_result = data.frame()
-# for (file in disease_files) {
-#   temp_df <-
-#     read.table(file,
-#                header = TRUE,
-#                sep = "\t",
-#                fill = TRUE)
-#   # 提取  "unstranded" 列
-#   unstranded <- temp_df[["unstranded"]]
-# 
-#   # 将值为0的元素替换为NA
-#   unstranded[unstranded == 0] <- NA
-# 
-#   # 将 "unstranded" 列添加到结果数据框中，按行分组相加
-#   if (length(disease_result) != 0) {
-#     disease_result <- cbind(disease_result, unstranded)
-#   } else {
-#     disease_result <- unstranded
-#   }
-# }
-# 
-# disease_result_mean <-
-#   rowMeans(disease_result, na.rm = TRUE)  # 计算每一行的平均值
-# 
-# # 同上，正常组处理，得到understand均值
-# control_result = data.frame()
-# for (file in control_files) {
-#   temp_df <-
-#     read.table(file,
-#                header = TRUE,
-#                sep = "\t",
-#                fill = TRUE)
-#   # 提取  "unstranded" 列
-#   unstranded <- temp_df[["unstranded"]]
-# 
-#   # 将值为0的元素替换为NA
-#   unstranded[unstranded == 0] <- NA
-# 
-#   # 将 "unstranded" 列添加到结果数据框中，按行分组相加
-#   if (length(control_result) != 0) {
-#     control_result <- cbind(control_result, unstranded)
-#   } else {
-#     control_result <- unstranded
-#   }
-# }
-# control_result_mean <-
-#   rowMeans(control_result, na.rm = TRUE)  # 计算每一行的平均值
-# 
+# 患病组处理，得到understand均值
+disease_result = data.frame()
+for (file in disease_files) {
+  temp_df <-
+    read.table(file,
+               header = TRUE,
+               sep = "\t",
+               fill = TRUE)
+  # 提取  "unstranded" 列
+  unstranded <- temp_df[["unstranded"]]
 
-disease_result_mean = get_mean(disease_files, 'understanded')
-control_result_mean = get_mean(control_files, 'understanded')
+  # 将值为0的元素替换为NA
+  unstranded[unstranded == 0] <- NA
+
+  # 将 "unstranded" 列添加到结果数据框中，按行分组相加
+  if (length(disease_result) != 0) {
+    disease_result <- cbind(disease_result, unstranded)
+  } else {
+    disease_result <- unstranded
+  }
+}
+
+disease_result_mean <-
+  rowMeans(disease_result, na.rm = TRUE)  # 计算每一行的平均值
+
+# 同上，正常组处理，得到understand均值
+control_result = data.frame()
+for (file in control_files) {
+  temp_df <-
+    read.table(file,
+               header = TRUE,
+               sep = "\t",
+               fill = TRUE)
+  # 提取  "unstranded" 列
+  unstranded <- temp_df[["unstranded"]]
+
+  # 将值为0的元素替换为NA
+  unstranded[unstranded == 0] <- NA
+
+  # 将 "unstranded" 列添加到结果数据框中，按行分组相加
+  if (length(control_result) != 0) {
+    control_result <- cbind(control_result, unstranded)
+  } else {
+    control_result <- unstranded
+  }
+}
+control_result_mean <-
+  rowMeans(control_result, na.rm = TRUE)  # 计算每一行的平均值
+
+
+# disease_result_mean = get_mean(disease_files, 'understanded')
+# control_result_mean = get_mean(control_files, 'understanded')
 # 计算logfc
 log_frame1 <- log2(as.matrix(disease_result_mean))
 log_frame2 <- log2(as.matrix(control_result_mean))
@@ -139,3 +139,4 @@ result_final <- data.frame(gene_id,
                            disease_result_mean,
                            control_result_mean,
                            logfc)
+

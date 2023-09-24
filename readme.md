@@ -7,7 +7,7 @@
 拉取代码：控制台执行
 
 ```
-git clone https://github.com/2333Ge/LL-TCGA.git
+git clone [仓库上方的clone地址]
 ```
 
 存代码
@@ -50,3 +50,5 @@ RStudio 导入这个目录后选择 `main.R` 文件，点击文件上方的 `run
 - https://bioconductor.org/packages/devel/bioc/vignettes/TCGAbiolinks/inst/doc/analysis.html#TCGAanalyze_Preprocessing:_Preprocessing_of_Gene_Expression_data_(IlluminaHiSeq_RNASeqV2)
 
 - https://rpubs.com/tiagochst/TCGAbiolinks_to_DESEq2
+
+- https://bioconductor.org/packages/devel/bioc/vignettes/DESeq2/inst/doc/DESeq2.html

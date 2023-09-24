@@ -19,8 +19,8 @@ git commit -m "保存信息"
 
 # R 语言环境配置
 
-环境：https://www.runoob.com/r/r-setup.html
-开发工具：https://posit.co/download/rstudio-desktop/
+- 环境：https://www.runoob.com/r/r-setup.html
+- 开发工具：https://posit.co/download/rstudio-desktop/
 
 # 代码说明
 

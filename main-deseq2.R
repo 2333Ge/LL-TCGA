@@ -13,6 +13,8 @@ library('stringr')
 library('DESeq2')
 
 DIR = './workspace/gdc-temp/'
+# 跑正式数据的时候发现有的行数不对，可能解压出问题了，用这个过滤一下
+ROW_COUNT = 60664
 
 # 读取JSON文件
 json_data <-
@@ -42,14 +44,20 @@ for (item in json_data) {
                              sep = "\t",
                              fill = TRUE)
     rowCount = nrow(temp_table)
-    if (ncol(simples) == 0) {
-      simples <-
-        data.frame(matrix(nrow = rowCount , ncol = 0))
-      # 一个样本中gen_name有重复的，所以用id，但是看官方没有示例用的gene_name,可能提取过程有误
-      gene_ids <- temp_table[['gene_id']]
-      rownames(simples) = temp_table[['gene_id']]
+    if (rowCount != ROW_COUNT) {
+      print(rowCount)
+      print(full_file_path)
+    } else {
+      if (ncol(simples) == 0) {
+        simples <-
+          data.frame(matrix(nrow = rowCount , ncol = 0))
+        # 一个样本中gen_name有重复的，所以用id，但是看官方没有示例用的gene_name,可能提取过程有误
+        gene_ids <- temp_table[['gene_id']]
+        rownames(simples) = temp_table[['gene_id']]
+      }
+      simples[[entity_submitter_id]] = temp_table[['unstranded']]
     }
-    simples[[entity_submitter_id]] = temp_table[['unstranded']]
+    
   }
 }
 #=================

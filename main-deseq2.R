@@ -1,5 +1,8 @@
 # 通过[DESeq2](https://bioconductor.org/packages/devel/bioc/vignettes/DESeq2/inst/doc/DESeq2.html) 得到logfc和p值
-
+# 安装和加载所需的包
+if (!require('rjson'))
+  install.packages("rjson")
+library('rjson')
 if (!require(stringr))
   install.packages("stringr")  # 常规R包
 if (!require("BiocManager", quietly = TRUE))
@@ -18,7 +21,7 @@ ROW_COUNT = 60664
 
 # 读取JSON文件
 json_data <-
-  fromJSON(file = "./workspace/metadata.cart.2023-09-21.json")
+  rjson::fromJSON(file = "./workspace/metadata.cart.2023-09-21.json")
 
 #=======  样本分组信息  =======
 
@@ -42,6 +45,7 @@ for (item in json_data) {
     temp_table <- read.table(full_file_path,
                              header = TRUE,
                              sep = "\t",
+                             stringsAsFactors = FALSE,
                              fill = TRUE)
     rowCount = nrow(temp_table)
     if (rowCount != ROW_COUNT) {

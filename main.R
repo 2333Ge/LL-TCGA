@@ -87,7 +87,7 @@ gene_id = temp_file[['gene_id']]
 
 
 
-# 注意：从chatgpt代码review还提到，需要统计检验或标准化处理，暂时不理解这个概念，数据可能要进一步处理
+# 注意：chatgpt代码review还提到，需要统计检验或标准化处理，暂时不理解这个概念，数据可能要进一步处理
 
 # 合并成新的数据框得到目标结果
 result_final <- data.frame(gene_id,

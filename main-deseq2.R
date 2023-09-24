@@ -44,25 +44,21 @@ for (item in json_data) {
     rowCount = nrow(temp_table)
     if (ncol(simples) == 0) {
       simples <-
-        data.frame(matrix(nrow = rowCount - 4, ncol = 0))
+        data.frame(matrix(nrow = rowCount , ncol = 0))
       # 一个样本中gen_name有重复的，所以用id，但是看官方没有示例用的gene_name,可能提取过程有误
       gene_ids <- temp_table[['gene_id']]
-      rownames(simples) = temp_table[['gene_id']][5:rowCount]
+      rownames(simples) = temp_table[['gene_id']]
     }
-    simples[[entity_submitter_id]] = temp_table[['unstranded']][5:rowCount]
-    
-    
+    simples[[entity_submitter_id]] = temp_table[['unstranded']]
   }
 }
 #=================
 
 dds <-
-  DESeqDataSetFromMatrix(
-    countData = simples,
-    colData = groups,
-    design = ~ group # 这个字段作用不是很懂
-  )
-
+  DESeqDataSetFromMatrix(countData = simples,
+                         colData = groups,
+                         # 这个字段作用不是很懂
+                         design = ~ group)
 dds <- DESeq(dds)
 # 得到dds后想看其他的数据可以在控制台执行，会快一点
 

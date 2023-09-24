@@ -58,9 +58,10 @@ dds <-
   DESeqDataSetFromMatrix(countData = simples,
                          colData = groups,
                          # 这个字段作用不是很懂
+                         
                          design = ~ group)
 dds <- DESeq(dds)
 # 得到dds后想看其他的数据可以在控制台执行，会快一点
-
+res = results(dds)
 resLFC <-
   lfcShrink(dds, coef = "group_control_vs_case", type = "apeglm")

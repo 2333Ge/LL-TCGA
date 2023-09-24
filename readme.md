@@ -27,7 +27,8 @@ git commit -m "保存信息"
 ## 目录说明
 
 ```
-├── main.R // 核心代码
+├── main.R // 核心代码，暂时弃用
+├── main-deseq2.R // v2版，使用deseq2进行分析
 ├── main.ipynb // 暂时用不到
 ├── readme.md
 └── workspace // 放样本数据

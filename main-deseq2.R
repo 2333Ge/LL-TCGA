@@ -1,6 +1,6 @@
 # 通过[DESeq2](https://bioconductor.org/packages/devel/bioc/vignettes/DESeq2/inst/doc/DESeq2.html) 得到logfc和p值
 
-if(!require(stringr))
+if (!require(stringr))
   install.packages("stringr")  # 常规R包
 if (!require("BiocManager", quietly = TRUE))
   install.packages("BiocManager")
@@ -41,29 +41,30 @@ for (item in json_data) {
                              header = TRUE,
                              sep = "\t",
                              fill = TRUE)
-    if (length(simples) == 0) {
-      simples = data.frame(gene_name = temp_table[['gene_name']])
-      simples[[entity_submitter_id]] = temp_table[['unstranded']]
-      # 如何动态指定列名
-      # simples = data.frame(`entity_submitter_id` = temp_table[['gene_name']])
-      
-    } else{
-      simples[[entity_submitter_id]] = temp_table[['unstranded']]
+    rowCount = nrow(temp_table)
+    if (ncol(simples) == 0) {
+      simples <-
+        data.frame(matrix(nrow = rowCount - 4, ncol = 0))
+      # 一个样本中gen_name有重复的，所以用id，但是看官方没有示例用的gene_name,可能提取过程有误
+      gene_ids <- temp_table[['gene_id']]
+      rownames(simples) = temp_table[['gene_id']][5:rowCount]
     }
+    simples[[entity_submitter_id]] = temp_table[['unstranded']][5:rowCount]
+    
     
   }
 }
 #=================
-# print(ncol(simples))
-# print(nrow(groups))
 
-dds <- DESeqDataSetFromMatrix(countData = simples[, 2:ncol(simples)],
-                              colData = groups,
-                              design = ~ group)
+dds <-
+  DESeqDataSetFromMatrix(
+    countData = simples,
+    colData = groups,
+    design = ~ group # 这个字段作用不是很懂
+  )
 
 dds <- DESeq(dds)
-# res <- results(dds)
-# summary(res)
-resLFC <- lfcShrink(dds, coef = "group_control_vs_case", type = "apeglm")
-resLFC
-# resSig <- subset(res, padj < 0.05)
+# 得到dds后想看其他的数据可以在控制台执行，会快一点
+
+resLFC <-
+  lfcShrink(dds, coef = "group_control_vs_case", type = "apeglm")

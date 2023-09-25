@@ -41,17 +41,19 @@ for (item in json_data) {
   
   
   if (file.exists(full_file_path)) {
-    groups = rbind(groups, data.frame(entity_submitter_id, group))
-    temp_table <- read.table(full_file_path,
-                             header = TRUE,
-                             sep = "\t",
-                             stringsAsFactors = FALSE,
-                             fill = TRUE)
+    temp_table <- read.table(
+      full_file_path,
+      header = TRUE,
+      sep = "\t",
+      stringsAsFactors = FALSE,
+      fill = TRUE
+    )
     rowCount = nrow(temp_table)
     if (rowCount != ROW_COUNT) {
       print(rowCount)
       print(full_file_path)
     } else {
+      groups = rbind(groups, data.frame(entity_submitter_id, group))
       if (ncol(simples) == 0) {
         simples <-
           data.frame(matrix(nrow = rowCount , ncol = 0))

@@ -52,3 +52,9 @@ RStudio 导入这个目录后选择 `main.R` 文件，点击文件上方的 `run
 - https://rpubs.com/tiagochst/TCGAbiolinks_to_DESEq2
 
 - https://bioconductor.org/packages/devel/bioc/vignettes/DESeq2/inst/doc/DESeq2.html
+
+- https://www.math.pku.edu.cn/teachers/lidf/docs/Rbook/html/_Rbook/intro.html
+
+- https://www.huber.embl.de/msmb/index.html
+
+- https://mform.ecology.wang/

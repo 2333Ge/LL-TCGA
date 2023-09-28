@@ -45,7 +45,7 @@ for (item in json_data) {
     temp_table <- read.table(full_file_path,
                              header = TRUE,
                              sep = "\t",
-                             stringsAsFactors = FALSE,
+                             stringsAsFactors = TRUE,
                              fill = TRUE)
     rowCount = nrow(temp_table)
     if (rowCount != ROW_COUNT) {
@@ -55,7 +55,6 @@ for (item in json_data) {
       if (ncol(simples) == 0) {
         simples <-
           data.frame(matrix(nrow = rowCount , ncol = 0))
-        # 一个样本中gen_name有重复的，所以用id，但是看官方没有示例用的gene_name,可能提取过程有误
         gene_ids <- temp_table[['gene_id']]
         rownames(simples) = temp_table[['gene_id']]
       }
@@ -70,7 +69,6 @@ dds <-
   DESeqDataSetFromMatrix(countData = simples,
                          colData = groups,
                          # 这个字段作用不是很懂
-                         
                          design = ~ group)
 dds <- DESeq(dds)
 # 得到dds后想看其他的数据可以在控制台执行，会快一点

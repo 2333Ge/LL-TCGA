@@ -11,7 +11,7 @@ git clone [仓库上方的clone地址]
 ```
 
 存代码
-```
+```sh
 git add .
 git commit -m "保存信息"
 ```
